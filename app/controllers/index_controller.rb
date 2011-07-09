@@ -34,7 +34,27 @@ class IndexController < ApplicationController
       "KALGOORLIE WA Australia"]
     routes <<
       ["Normanton QLD Australia", "Croydon QLD Australia"]
-
+    routes <<
+      [
+        "Townsville QLD Australia", "Charters Towers QLD Australia", "Pentland QLD Australia",
+        "Torrens Creek QLD Australia", "Hughenden QLD Australia", "Richmond QLD Australia",
+        "Julia Creek QLD Australia", "Cloncurry QLD Australia", "Duchess QLD Australia",
+        "Mount Isa QLD Australia"]
+    routes <<
+      ["Cairns QLD Australia", "Freshwater QLD Australia", "Kuranda QLD Australia"]
+    routes <<
+      ["Cairns QLD Australia", "Mareeba QLD Australia", "Almaden QLD Australia",
+      "Mount Surprise QLD Australia", "Einasleigh QLD Australia", "Forsayth QLD Australia"]
+    routes <<
+      ["Longreach QLD Australia", "Ilfracombe QLD Australia", "Barcaldine QLD Australia",
+      "Jericho QLD Australia", "Alpha QLD Australia",	"Bogantungan QLD Australia",
+      "Willows QLD Australia", "Anakie QLD Australia",  "Emerald QLD Australia",
+      "Comet QLD Australia", "Blackwater QLD Australia", "Bluff QLD Australia",
+      "Dingo QLD Australia", "Duaringa QLD Australia", "Rockhampton QLD Australia",
+      "Mount Larcom QLD Australia", "Gladstone QLD Australia", "Miriam Vale QLD Australia",
+      "Bundaberg QLD Australia", "Maryborough West QLD Australia", "Gympie North QLD Australia",
+      "Cooroy QLD Australia", "Nambour QLD Australia", "Caboolture QLD Australia",
+      "Brisbane QLD Australia"]
 
     routes.each do |route|
       stops = get_stops_from_route route
