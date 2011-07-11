@@ -7,6 +7,8 @@ gem 'rails', '3.0.7'
 
 gem 'sqlite3'
 gem 'geokit'
+gem 'heroku'
+gem 'heroku_san'
 #gem 'ym4r'
 #gem 'ym4r_gm'
 
