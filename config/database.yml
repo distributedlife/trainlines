@@ -20,12 +20,7 @@ test: &test
 production:
   adapter: postgresql
   database: trainlines
-#  username: rybo
   encoding: utf8
-#  pool: 5
-#  timeout: 5000
-#  adapter: sqlite3
-#  database: db/production.sqlite3
   pool: 5
   timeout: 5000
 
