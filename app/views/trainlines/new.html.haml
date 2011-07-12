@@ -1,0 +1,5 @@
+.centre
+  = form_tag(trainlines_path, :method => :post) do
+    = label_tag(:stops, "Add a train route by supplying a comma or line separated list of stops")
+    = text_area_tag(:stops)
+    = submit_tag("Verify Route")

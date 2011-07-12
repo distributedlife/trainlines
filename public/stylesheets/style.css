@@ -8,3 +8,18 @@ body {
 
 #map_canvas {
   height: 100%; }
+
+.centre {
+  /*  width: 100%;*/ }
+
+textarea {
+  margin: auto;
+  width: 80%;
+  font-size: 1.0em;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 2px solid #eeeeee;
+  height: 20em;
+  padding: 0.6em;
+  display: block; }
