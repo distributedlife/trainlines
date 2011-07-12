@@ -371,7 +371,7 @@ class IndexController < ApplicationController
         Location.create(:name => stop, :lat => geo.lat, :lng => geo.lng)
         
         stops << [geo.lat, geo.lng]
-        sleep 0.01
+        sleep 0.1
 
         @used_stations[stop] = true
       else
