@@ -23,14 +23,14 @@ class IndexController < ApplicationController
         stops << [geo.lat, geo.lng]
         sleep 0.1
 
-        @used_stations[stop] = true
+        @used_stations[stop.name] = true
       else
-        if @used_stations[stop].nil?
-          stops << [location.first.lat, location.first.lng, true]
+        if @used_stations[stop.name].nil?
+          stops << [location.first.lat, location.first.lng, true, location.first.name]
           
-          @used_stations[stop] = true
+          @used_stations[stop.name] = true
         else
-          stops << [location.first.lat, location.first.lng, false]
+          stops << [location.first.lat, location.first.lng, false, ""]
         end
       end
     end

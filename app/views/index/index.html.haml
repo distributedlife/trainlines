@@ -1,9 +1,9 @@
 %script{:type => "text/javascript", :src => "http://maps.google.com/maps/api/js?sensor=true"}
 %script{:type => "text/javascript", :src => "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"}
 :javascript
-  function place_no_geocode(position)
+  function place_no_geocode(position, title)
   {
-    var marker = new google.maps.Marker({ position: position });
+    var marker = new google.maps.Marker({ position: position, title: title });
     markers.push(marker);
     counter++;
   };
@@ -27,7 +27,7 @@
   - route.each do |stop|
     - position = "new google.maps.LatLng(#{stop[0]}, #{stop[1]})"
     - if stop[2] == true
-      - @my_points = "#{@my_points}\n place_no_geocode(#{position});"
+      - @my_points = "#{@my_points}\n place_no_geocode(#{position}, '#{stop[3]}');"
       - @marker_count = @marker_count + 1
     - if route_line.empty?
       - route_line = "#{position}"
@@ -46,9 +46,9 @@
   function initialize() {
     geocoder = new google.maps.Geocoder();
 
-    var latlng = new google.maps.LatLng(-37.81816020000001, 144.95338830000003);
+    var latlng = new google.maps.LatLng(-23.7002104, 133.8806114);
     var myOptions = {
-      zoom: 8,
+      zoom: 3,
       center: latlng,
       mapTypeId: google.maps.MapTypeId.TERRAIN
     };
