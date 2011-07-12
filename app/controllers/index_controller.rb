@@ -14,6 +14,7 @@ class IndexController < ApplicationController
       "Bordertown Australia",
       "Murray Bridge Australia",
       "Adelaide Australia"]
+
     routes <<
       ["Sydney Australia", "Broken Hill Australia", "Adelaide Australia",
       "Cook South Australia", "Kalgoorlie Australia", "Perth Australia"]
@@ -332,7 +333,7 @@ class IndexController < ApplicationController
       "Porirua New Zealand",
       "Wellington New Zealand"]
 
-    #FERRY
+#    #FERRY
 #    routes <<
 #      ["Wellington New Zealand",
 #      "Picton New Zealand"
@@ -341,6 +342,12 @@ class IndexController < ApplicationController
     @geocoded_routes = []
     @used_stations = {}
     routes.each do |route|
+      stored_route = Routes.create
+      route.each do |stop|
+        Stops.create(:routes_id => stored_route.id, :name => stop)
+      end
+    end
+    Routes.all.each do |route|
       @geocoded_routes << get_stops_from_route(route)
     end
   end
@@ -362,13 +369,13 @@ class IndexController < ApplicationController
 
   def get_stops_from_route route
     stops = []
-    route.each do |stop|
+    Stops.where(:routes_id => route.id).each do |stop|
       
-      location = Location.where(:name => stop)
+      location = Location.where(:name => stop.name)
       if location.empty?
-        geo = GoogleGeocoder.geocode(stop.to_s)
+        geo = GoogleGeocoder.geocode(stop.name)
         
-        Location.create(:name => stop, :lat => geo.lat, :lng => geo.lng)
+        Location.create(:name => stop.name, :lat => geo.lat, :lng => geo.lng)
         
         stops << [geo.lat, geo.lng]
         sleep 0.1
@@ -387,6 +394,34 @@ class IndexController < ApplicationController
 
     stops
   end
+
+#  def get_stops_from_route route
+#    stops = []
+#    route.each do |stop|
+#
+#      location = Location.where(:name => stop)
+#      if location.empty?
+#        geo = GoogleGeocoder.geocode(stop.to_s)
+#
+#        Location.create(:name => stop, :lat => geo.lat, :lng => geo.lng)
+#
+#        stops << [geo.lat, geo.lng]
+#        sleep 0.1
+#
+#        @used_stations[stop] = true
+#      else
+#        if @used_stations[stop].nil?
+#          stops << [location.first.lat, location.first.lng, true]
+#
+#          @used_stations[stop] = true
+#        else
+#          stops << [location.first.lat, location.first.lng, false]
+#        end
+#      end
+#    end
+#
+#    stops
+#  end
 
   def get_track_line_from_stops stops
     points = []

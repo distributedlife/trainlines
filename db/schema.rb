@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110712095524) do
+ActiveRecord::Schema.define(:version => 20110712115126) do
 
   create_table "locations", :force => true do |t|
     t.decimal  "lat",        :null => false
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(:version => 20110712095524) do
   end
 
   add_index "locations", ["name"], :name => "index_locations_on_name"
+
+  create_table "routes", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stops", :force => true do |t|
+    t.integer "routes_id"
+    t.text    "name",      :null => false
+  end
 
   create_table "versions", :force => true do |t|
     t.string   "item_type",  :null => false

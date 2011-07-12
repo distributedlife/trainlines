@@ -55,19 +55,10 @@
 
     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-
     
     #{@my_points.to_s}
-
     created = setInterval(create_marker_cluster, 1000)
-
     #{@my_routes_as_lines.to_s}
-
-    var line_points = [
-      new google.maps.LatLng(-37.81816020000001, 144.95338830000003),
-      new google.maps.LatLng(-37.8070147, 144.94186590000004),
-    ];
-    draw_line(line_points, map)  
   } ;
 
   function create_marker_cluster()
