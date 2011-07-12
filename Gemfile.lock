@@ -1,6 +1,11 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    POpen4 (0.1.4)
+      Platform (>= 0.4.0)
+      open4
+    Platform (0.4.0)
+    ZenTest (4.5.0)
     abstract (1.0.0)
     actionmailer (3.0.7)
       actionpack (= 3.0.7)
@@ -28,13 +33,53 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
+    akephalos (0.2.5)
+      capybara (~> 0.4.0)
+      jruby-jars
     arel (2.0.10)
+    autotest-rails (4.1.0)
+      ZenTest
     awesome_print (0.4.0)
+    blueprints (0.9.0)
+      activesupport (>= 2.3.0)
+      database_cleaner (~> 0.5.0)
     builder (2.1.2)
+    capybara (0.4.1.2)
+      celerity (>= 0.7.9)
+      culerity (>= 0.2.4)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (>= 0.0.27)
+      xpath (~> 0.1.3)
+    celerity (0.8.9)
+    childprocess (0.1.9)
+      ffi (~> 1.0.6)
     configuration (1.3.1)
+    cucumber (1.0.0)
+      builder (>= 2.1.2)
+      diff-lcs (>= 1.1.2)
+      gherkin (~> 2.4.1)
+      json (>= 1.4.6)
+      term-ansicolor (>= 1.0.5)
+    cucumber-rails (0.4.1)
+      cucumber (>= 0.10.1)
+      nokogiri (>= 1.4.4)
+      rack-test (>= 0.5.7)
+    culerity (0.2.15)
+    dalli (1.0.5)
+    database_cleaner (0.5.2)
+    diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    faker (0.9.5)
+      i18n (~> 0.4)
+    ffi (1.0.9)
     geokit (1.6.0)
+    gherkin (2.4.1)
+      json (>= 1.4.6)
+    haml (3.1.2)
     heroku (2.3.3)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
@@ -43,15 +88,29 @@ GEM
       heroku (>= 2)
       rails (>= 2)
     i18n (0.5.0)
+    jammit (0.6.3)
+      yui-compressor (>= 0.9.3)
+    jquery-rails (1.0.12)
+      railties (~> 3.0)
+      thor (~> 0.14)
+    jruby-jars (1.6.2)
+    json (1.5.3)
+    json_pure (1.5.3)
     launchy (0.4.0)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
+    machinist (1.0.6)
     mail (2.2.19)
       activesupport (>= 2.3.6)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    nokogiri (1.4.6)
+    notifier (0.1.3)
+    open4 (1.1.0)
+    paper_trail (2.2.5)
+      rails (~> 3)
     pg (0.11.0)
     polyglot (0.3.1)
     rack (1.2.3)
@@ -75,21 +134,66 @@ GEM
     rake (0.9.2)
     rest-client (1.6.3)
       mime-types (>= 1.16)
+    rspec (2.6.0)
+      rspec-core (~> 2.6.0)
+      rspec-expectations (~> 2.6.0)
+      rspec-mocks (~> 2.6.0)
+    rspec-core (2.6.4)
+    rspec-expectations (2.6.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.6.0)
+    rspec-rails (2.6.1)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      railties (~> 3.0)
+      rspec (~> 2.6.0)
+    rubyzip (0.9.4)
+    selenium-webdriver (0.2.2)
+      childprocess (>= 0.1.9)
+      ffi (>= 1.0.7)
+      json_pure
+      rubyzip
+    spork (0.8.5)
     sqlite3 (1.3.3)
     term-ansicolor (1.0.5)
+    test_notifier (0.3.6)
+      notifier
     thor (0.14.6)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.29)
+    xpath (0.1.4)
+      nokogiri (~> 1.3)
+    yui-compressor (0.9.6)
+      POpen4 (>= 0.1.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  akephalos
+  autotest-rails
   awesome_print
+  blueprints
+  capybara
+  cucumber
+  cucumber-rails
+  dalli
+  database_cleaner
+  faker
   geokit
+  gherkin
+  haml
   heroku
   heroku_san
+  jammit
+  jquery-rails
+  launchy
+  machinist
+  paper_trail
   pg
   rails (= 3.0.7)
+  rspec-rails
+  spork
   sqlite3
+  test_notifier

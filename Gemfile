@@ -10,8 +10,11 @@ gem 'pg'
 gem 'geokit'
 gem 'heroku'
 gem 'heroku_san'
-#gem 'ym4r'
-#gem 'ym4r_gm'
+gem 'haml'
+gem 'jquery-rails'
+gem 'jammit'
+gem 'paper_trail'
+gem 'dalli'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -33,5 +36,19 @@ gem 'heroku_san'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'gherkin'
+  gem 'cucumber-rails'
+  gem 'cucumber'
+  gem 'rspec-rails'
+  gem 'spork'
+  gem 'launchy'    # So you can do Then show me the page
+  gem 'autotest-rails'
+  gem 'test_notifier'
   gem 'awesome_print'
+  gem 'akephalos'
+  gem 'machinist'
+  gem 'faker'
+  gem 'blueprints'
 end
