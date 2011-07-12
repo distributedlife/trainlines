@@ -380,6 +380,7 @@ class IndexController < ApplicationController
       end
 
       stops << @all_stops[stop.to_s]
+      sleep 0.1
     end
 
     stops
