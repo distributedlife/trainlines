@@ -298,48 +298,48 @@ class IndexController < ApplicationController
 #      "Mooroopna VIC Australia",
 #      "Shepparton VIC Australia"]
 
-    routes <<
-      ["Christchurch New Zealand",
-      "Rolleston New Zealand",
-      "Darfield New Zealand",
-      "Springfield New Zealand",
-      "Cass New Zealand",
-      "Arthurs Pass New Zealand",
-      "Otira New Zealand",
-      "Jacksons New Zealand",
-      "Moana New Zealand",
-      "Arnold Valley New Zealand",
-      "Dobson, West Coast, New Zealand",
-      "Greymouth New Zealand"]
-    routes <<
-      ["Picton New Zealand",
-      "Blenheim New Zealand",
-      "Seddon New Zealand",
-      "Kaikoura New Zealand",
-      "Mina New Zealand",
-      "Waipara New Zealand",
-      "Rangiora New Zealand",
-      "Christchurch New Zealand"]
-    routes <<
-      ["Auckland New Zealand",
-      "Middlemore New Zealand",
-      "Papakura New Zealand",
-      "Pukekohe New Zealand",
-      "Hamilton New Zealand",
-      "Otorohanga New Zealand",
-      "Te Kuiti New Zealand",
-      "Taumarunui New Zealand",
-      "National Park New Zealand",
-      "Ohakune New Zealand",
-      "Taihape New Zealand",
-      "Marton New Zealand",
-      "Feilding New Zealand",
-      "Palmerston North New Zealand",
-      "Levin New Zealand",
-      "Waikanae New Zealand",
-      "Paraparaumu New Zealand",
-      "Porirua New Zealand",
-      "Wellington New Zealand"]
+#    routes <<
+#      ["Christchurch New Zealand",
+#      "Rolleston New Zealand",
+#      "Darfield New Zealand",
+#      "Springfield New Zealand",
+#      "Cass New Zealand",
+#      "Arthurs Pass New Zealand",
+#      "Otira New Zealand",
+#      "Jacksons New Zealand",
+#      "Moana New Zealand",
+#      "Arnold Valley New Zealand",
+#      "Dobson, West Coast, New Zealand",
+#      "Greymouth New Zealand"]
+#    routes <<
+#      ["Picton New Zealand",
+#      "Blenheim New Zealand",
+#      "Seddon New Zealand",
+#      "Kaikoura New Zealand",
+#      "Mina New Zealand",
+#      "Waipara New Zealand",
+#      "Rangiora New Zealand",
+#      "Christchurch New Zealand"]
+#    routes <<
+#      ["Auckland New Zealand",
+#      "Middlemore New Zealand",
+#      "Papakura New Zealand",
+#      "Pukekohe New Zealand",
+#      "Hamilton New Zealand",
+#      "Otorohanga New Zealand",
+#      "Te Kuiti New Zealand",
+#      "Taumarunui New Zealand",
+#      "National Park New Zealand",
+#      "Ohakune New Zealand",
+#      "Taihape New Zealand",
+#      "Marton New Zealand",
+#      "Feilding New Zealand",
+#      "Palmerston North New Zealand",
+#      "Levin New Zealand",
+#      "Waikanae New Zealand",
+#      "Paraparaumu New Zealand",
+#      "Porirua New Zealand",
+#      "Wellington New Zealand"]
 
 #FERRY
 #Wellington
