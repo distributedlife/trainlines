@@ -2,19 +2,58 @@ include Geokit::Geocoders
 
 class TrainlinesController < ApplicationController
   def new
+    @geocoded_routes = []
+    @stops = ""
   end
 
-  def create
-    stops = []
+  def edit
+    @used_stations = {}
+    @geocoded_routes = []
 
-    comma_list = params[:stops].split(',')
-    comma_list.each do |item|
-      stops << item.split("\r\n")
+    @route = Routes.find(params[:id])
+    if @route.nil?
+      return redirect_to root_path
     end
 
-    #flatten, trim and geocode
+
+    @geocoded_routes << get_stops_from_route(@route)
+
+
+    stops = []
+    Stops.where(:routes_id => @route.id).each do |stop|
+      stops << stop.name
+    end
+    @stops = stops.join("\n")
+    @name = @route.name
+  end
+
+  def update
+    stops = []
+    changed ||= false
+    changed = false if params[:changed] == "false"
+    @name = params[:name]
+
+    stops = get_collapsed_array_from_stop_string params[:stops]
     stops.flatten!
 
+
+    @route = Routes.find(params[:id])
+    if @route.nil?
+      return redirect_to root_path
+    end
+
+    unless changed and !@name.nil?
+      @route.name = @name
+      @route.save!
+
+      #remove old stops (they will be replaced by new ones)
+      Stops.where(:routes_id => @route.id).each do |stop|
+        stop.delete
+      end
+    end
+
+
+    #trim and geocode
     @geocoded_routes = []
     @used_stations = {}
     geocoded_stops = []
@@ -22,13 +61,52 @@ class TrainlinesController < ApplicationController
       stop.strip!
 
       geocoded_stops << get_location(stop)
+
+      Stops.create(:name => stop, :routes_id => @route.id) unless changed and !@name.nil?
     end
     @geocoded_routes << geocoded_stops
 
-    @stops = stops.join(',')
+    @stops = stops.join("\n")
+    @changed = false
+
+
+    redirect_to trainline_path(@route.id) unless changed and !@name.nil?
+  end
+
+  def create
+    stops = []
+    changed ||= false
+    changed = false if params[:changed] == "false"
+    @name = params[:name]
+
+    stops = get_collapsed_array_from_stop_string params[:stops]
+    stops.flatten!
+
+    
+    route = Routes.create(:name => @name) unless changed and !@name.nil?
+
+
+    #trim and geocode
+    @geocoded_routes = []
+    @used_stations = {}
+    geocoded_stops = []
+    stops.each do |stop|
+      stop.strip!
+
+      geocoded_stops << get_location(stop)
+
+      Stops.create(:name => stop, :routes_id => route.id) unless changed and !@name.nil?
+    end
+    @geocoded_routes << geocoded_stops
+
+    @stops = stops.join("\n")
+    @changed = false
+
+
+    redirect_to root_path unless changed and !@name.nil?
   end
   
-  def show
+  def index
     @geocoded_routes = []
     @used_stations = {}
     Routes.all.each do |route|
@@ -36,7 +114,31 @@ class TrainlinesController < ApplicationController
     end
   end
 
+  def routes
+    @routes = Routes.order(:name).all
+  end
+
+  def show
+    @used_stations = {}
+    @geocoded_routes = []
+
+    @route = Routes.find(params[:id])
+    @geocoded_routes << get_stops_from_route(@route)
+
+    redirect_to root_path if @route.nil?
+  end
+
   private
+  def get_collapsed_array_from_stop_string stops_string
+    stops = []
+    comma_list = stops_string.split(',')
+    comma_list.each do |item|
+      stops << item.split("\r\n")
+    end
+
+    stops
+  end
+
   def get_stops_from_route route
     stops = []
     Stops.where(:routes_id => route.id).each do |stop|      

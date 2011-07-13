@@ -67,9 +67,6 @@
     }
   };
 %body{:onload => "initialize()"}
-  - if @route.name.nil?
-    =render :partial => '/header', :locals => {:text => (link_to "Unnamed Route", edit_trainline_path(@route.id))}
-  - else
-    =render :partial => '/header', :locals => {:text => @route.name}
+  =render :partial => '/header', :locals => {:text => "Trainlines - the world and train routes"}
   #map_canvas
-  =render :partial => '/route_footer', :locals => {:id => @route.id}
+  =render :partial => '/footer'

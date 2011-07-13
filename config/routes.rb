@@ -1,5 +1,9 @@
 Trainmap::Application.routes.draw do
-  root :to => "trainlines#show"
+  root :to => "trainlines#index"
 
-  resources :trainlines
+  resources :trainlines do
+    collection do
+      get "routes"
+    end
+  end
 end

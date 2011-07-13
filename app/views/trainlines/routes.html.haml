@@ -1,0 +1,8 @@
+%body
+  =render :partial => '/header', :locals => {:text => "Trainlines - the world and train routes"}
+  - @routes.each do |route|
+    - if route.name.nil?
+      %p= link_to "Unnamed route", trainline_path(route.id)
+    - else
+      %p= link_to route.name, trainline_path(route.id)
+  =render :partial => '/footer'
