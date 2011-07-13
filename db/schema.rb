@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110713100843) do
+ActiveRecord::Schema.define(:version => 20110713120956) do
 
   create_table "locations", :force => true do |t|
     t.decimal  "lat",        :null => false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20110713100843) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.date     "discontinued"
   end
 
   create_table "stops", :force => true do |t|

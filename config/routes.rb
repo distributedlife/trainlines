@@ -5,5 +5,10 @@ Trainmap::Application.routes.draw do
     collection do
       get "routes"
     end
+
+    member do
+      put "discontinue"
+      put "reinstate"
+    end
   end
 end

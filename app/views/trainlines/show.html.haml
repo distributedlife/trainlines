@@ -67,9 +67,12 @@
     }
   };
 %body{:onload => "initialize()"}
+  - discontinued = ""
+  - unless @route.discontinued.nil?
+    - discontinued = " [discontinued]"
   - if @route.name.nil?
-    =render :partial => '/header', :locals => {:text => (link_to "Unnamed Route", edit_trainline_path(@route.id))}
+    =render :partial => '/header', :locals => {:text => (link_to "Unnamed Route#{discontinued}", edit_trainline_path(@route.id))}
   - else
-    =render :partial => '/header', :locals => {:text => @route.name}
+    =render :partial => '/header', :locals => {:text => "#{@route.name}#{discontinued}"}
   #map_canvas
-  =render :partial => '/route_footer', :locals => {:id => @route.id}
+  =render :partial => '/route_footer', :locals => {:id => @route.id, :discontinued => !@route.discontinued.nil?}

@@ -115,13 +115,13 @@ class TrainlinesController < ApplicationController
   def index
     @geocoded_routes = []
     @used_stations = {}
-    Routes.all.each do |route|
+    Routes.where(:discontinued => nil).each do |route|
       @geocoded_routes << get_stops_from_route(route)
     end
   end
 
   def routes
-    @routes = Routes.order(:name).all
+    @routes = Routes.order("discontinued DESC").order(:name).all
   end
 
   def show
@@ -132,6 +132,22 @@ class TrainlinesController < ApplicationController
     @geocoded_routes << get_stops_from_route(@route)
 
     redirect_to root_path if @route.nil?
+  end
+
+  def discontinue
+    @route = Routes.find(params[:id])
+    @route.discontinued = Time.now
+    @route.save
+
+    redirect_to trainline_path(@route.id)
+  end
+
+  def reinstate
+    @route = Routes.find(params[:id])
+    @route.discontinued = nil
+    @route.save
+
+    redirect_to trainline_path(@route.id)
   end
 
   private
