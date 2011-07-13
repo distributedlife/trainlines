@@ -29,9 +29,10 @@ class TrainlinesController < ApplicationController
 
   def update
     stops = []
-    changed ||= false
+    changed ||= true
     changed = false if params[:changed] == "false"
     @name = params[:name]
+    @name = "" if @name == "a name for your route..."
 
     stops = get_collapsed_array_from_stop_string params[:stops]
     stops.flatten!
@@ -42,7 +43,7 @@ class TrainlinesController < ApplicationController
       return redirect_to root_path
     end
 
-    unless changed and !@name.nil?
+    if !changed and !@name.empty?
       @route.name = @name
       @route.save!
 
@@ -50,6 +51,8 @@ class TrainlinesController < ApplicationController
       Stops.where(:routes_id => @route.id).each do |stop|
         stop.delete
       end
+
+      redirect_to trainline_path(@route.id)
     end
 
 
@@ -62,28 +65,32 @@ class TrainlinesController < ApplicationController
 
       geocoded_stops << get_location(stop)
 
-      Stops.create(:name => stop, :routes_id => @route.id) unless changed and !@name.nil?
+      if !changed and !@name.empty?
+        Stops.create(:name => stop, :routes_id => @route.id)
+      end
     end
     @geocoded_routes << geocoded_stops
 
     @stops = stops.join("\n")
     @changed = false
-
-
-    redirect_to trainline_path(@route.id) unless changed and !@name.nil?
   end
 
   def create
     stops = []
-    changed ||= false
-    changed = false if params[:changed] == "false"
+    changed ||= true
+    changed = false if params[:changed] == "false" 
     @name = params[:name]
+    @name = "" if @name == "a name for your route..."
 
     stops = get_collapsed_array_from_stop_string params[:stops]
     stops.flatten!
 
-    
-    route = Routes.create(:name => @name) unless changed and !@name.nil?
+
+    if !changed and !@name.empty?
+      route = Routes.create(:name => @name)
+
+      redirect_to root_path
+    end
 
 
     #trim and geocode
@@ -95,15 +102,14 @@ class TrainlinesController < ApplicationController
 
       geocoded_stops << get_location(stop)
 
-      Stops.create(:name => stop, :routes_id => route.id) unless changed and !@name.nil?
+      if !changed and !@name.empty?
+        Stops.create(:name => stop, :routes_id => route.id)
+      end
     end
     @geocoded_routes << geocoded_stops
 
     @stops = stops.join("\n")
     @changed = false
-
-
-    redirect_to root_path unless changed and !@name.nil?
   end
   
   def index

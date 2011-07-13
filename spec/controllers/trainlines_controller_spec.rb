@@ -30,7 +30,7 @@ describe TrainlinesController do
       Routes.count.should == 0
       Stops.count.should == 0
 
-      post :create, :name => "", :stops => "Footscray Station, Yarraville Station", :changed => false
+      post :create, :name => "", :stops => "Footscray Station, Yarraville Station", :changed => "false"
 
       Routes.count.should == 0
       Stops.count.should == 0
@@ -40,7 +40,7 @@ describe TrainlinesController do
       Routes.count.should == 0
       Stops.count.should == 0
 
-      post :create, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => true
+      post :create, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => "true"
 
       Routes.count.should == 0
       Stops.count.should == 0
@@ -50,7 +50,7 @@ describe TrainlinesController do
       Stops.count.should == 0
       Routes.count.should == 0
 
-      post :create, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => false
+      post :create, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => "false"
 
       Routes.count.should == 1
       Stops.count.should == 2
@@ -61,7 +61,7 @@ describe TrainlinesController do
     end
 
     it 'should redirect to index if save successful' do
-      post :create, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => false
+      post :create, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => "false"
 
       response.should be_redirect
       response.should redirect_to(root_path)
@@ -80,19 +80,19 @@ describe TrainlinesController do
     end
 
     it 'should not save a route without a name' do
-      put :update, :id => @route.id, :name => "", :stops => "Footscray Station, Yarraville Station", :changed => false
+      put :update, :id => @route.id, :name => "", :stops => "Footscray Station, Yarraville Station", :changed => "false"
 
       Routes.first.name.should == @route.name
     end
 
     it 'should not save a route when changed is true' do
-      put :update, :id => @route.id, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => true
+      put :update, :id => @route.id, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => "true"
 
       Routes.first.name.should == @route.name
     end
 
     it 'save the route and its stops' do
-      put :update, :id => @route.id, :name => "Werribee Line", :stops => "Sedden Station, Yarraville Station", :changed => false
+      put :update, :id => @route.id, :name => "Werribee Line", :stops => "Sedden Station, Yarraville Station", :changed => "false"
 
       Routes.count.should == 1
       Stops.count.should == 2
@@ -103,7 +103,7 @@ describe TrainlinesController do
     end
 
     it 'should redirect to route page if save successful' do
-      put :update, :id => @route.id, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => false
+      put :update, :id => @route.id, :name => "Werribee Line", :stops => "Footscray Station, Yarraville Station", :changed => "false"
 
       response.should be_redirect
       response.should redirect_to(trainline_path(@route.id))

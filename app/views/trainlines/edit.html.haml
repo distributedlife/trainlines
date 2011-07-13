@@ -81,6 +81,8 @@ $(document).ready(function() {
   if ($("#name").val() == "")
   {
     $("#name").defaultvalue("a name for your route...");
+    $('#changed').attr('value', 'true');
+    $('#verify_save_route').attr('value', 'Verify Route');
   }
 
   $('#stops').change(function() {
