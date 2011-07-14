@@ -2,7 +2,7 @@
   =render :partial => '/header', :locals => {:text => "Trainlines - the world and train routes"}
   .route
     %p{:style => "padding:0.3em; min-width:400px; display:inline-block;"} Routes
-    %p{:style => "display:inline-block; margin-left:4.0em; min-width:4em;"} Stop Count
+    %p{:style => "display:inline-block; margin-left:15.0em; min-width:4em;"} Stop Count
   - @routes.each do |route|
     - discontinued = ""
     - unless route.discontinued.nil?
@@ -16,7 +16,7 @@
     - if route.name.nil?
       .route
         %p{:style => "padding:0.3em; min-width:400px; display:inline-block;"}= link_to "Unnamed route", trainline_path(route.id)
-        %p{:style => "display:inline-block; margin-left:2.0em; min-width:4em; text-align:right;"}
+        %p{:style => "display:inline-block; margin-left:2.0em; min-width:15em; text-align:right;"}
           = link_to "#{stop_count}", trainline_path(route.id)
         %p{:style => "display:inline-block;"}
           = link_to "stops", trainline_path(route.id)
@@ -24,7 +24,7 @@
     - else
       .route
         %p{:style => "padding:0.3em; min-width:400px; display:inline-block;"}= link_to "#{route.name}", trainline_path(route.id)
-        %p{:style => "display:inline-block; margin-left:2.0em; min-width:4em; text-align:right;"}
+        %p{:style => "display:inline-block; margin-left:2.0em; min-width:15em; text-align:right;"}
           = link_to "#{stop_count}", trainline_path(route.id)
         %p{:style => "display:inline-block;"}
           = link_to "stops", trainline_path(route.id)
