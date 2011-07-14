@@ -173,17 +173,20 @@ class TrainlinesController < ApplicationController
     @q.strip!
     @q.downcase!
 
+    ap @q
     sql = <<-SQL
       select *
       from routes
-      join stops on routes.id = stops.routes_id
-      where (lower(routes.name) like '%#{@q}%' or lower(stops.name) like '%#{@q}%')
+      where (lower(routes.name) like '%#{@q}%'
+      or routes.id in (select routes_id from stops where lower(stops.name) like '%#{@q}%'))
       and routes.discontinued is null
     SQL
+    ap sql
 
     @geocoded_routes = []
     @used_stations = {}
     Routes.find_by_sql(sql).each do |route|
+      ap route
       @geocoded_routes << get_stops_from_route(route)
     end
   end
