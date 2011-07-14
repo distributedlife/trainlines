@@ -3,7 +3,10 @@ Trainmap::Application.routes.draw do
 
   resources :trainlines do
     collection do
+      resources :stops
+      
       get "routes"
+      get "search"
     end
 
     member do

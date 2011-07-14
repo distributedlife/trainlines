@@ -1,5 +1,5 @@
 %p{:class => 'footer'}
-  route
+  this route:
   [
   = link_to "edit", edit_trainline_path(id)
   ,
@@ -7,4 +7,10 @@
     = link_to "reinstate", reinstate_trainline_path(id), :method => :put
   - else
     = link_to "discontinue", discontinue_trainline_path(id), :method => :put
+  ]
+  all routes:
+  [
+  = link_to "add", new_trainline_path
+  ,
+  = link_to "edit", routes_trainlines_path
   ]

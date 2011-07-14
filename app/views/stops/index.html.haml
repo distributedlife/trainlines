@@ -1,0 +1,6 @@
+%body
+  =render :partial => '/header', :locals => {:text => "All current stops"}
+  - @stops.each do |stop|
+    .stop
+      %p{:style => "padding:0.3em;"}= link_to stop.name, stop_path(stop.id)
+  =render :partial => '/footer'

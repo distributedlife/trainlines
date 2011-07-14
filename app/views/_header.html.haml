@@ -1,4 +1,10 @@
-%p{:style => 'float:right; font-size:1.0em; padding:0.6em;'}
+- @q ||= ""
+- show_search ||= false
+%p{:style => 'float:right; font-size:1.0em; padding-top:0.6em; padding-right: 0.6em;'}
   = link_to "home", root_path
-%p{:class => 'menu'}
+- if show_search
+  .div{:style => "float:right; width:20%; display: inline;"}
+    = form_tag(search_trainlines_path, :method => :get) do
+      = text_field_tag(:q, @q)
+%p.menu
   = text

@@ -8,32 +8,10 @@
     counter++;
   };
 
-  function draw_line(points, map) {
-    var line = new google.maps.Polyline({
-      path: points,
-      strokeColor: "#FF0000",
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    });
-
-    line.setMap(map);
-  }
-
-- @marker_count = 0
+- @marker_count = 1
 - @my_points = ""
-- @my_routes_as_lines = ""
-- @geocoded_routes.each do |route|
-  - route_line = ""
-  - route.each do |stop|
-    - position = "new google.maps.LatLng(#{stop[0]}, #{stop[1]})"
-    - if stop[2] == true
-      - @my_points = "#{@my_points}\n place_no_geocode(#{position}, '#{stop[3]}');"
-      - @marker_count = @marker_count + 1
-    - if route_line.empty?
-      - route_line = "#{position}"
-    - else
-      - route_line = "#{route_line},#{position}"
-  - @my_routes_as_lines = "#{@my_routes_as_lines}\ndraw_line([#{route_line}],map);"
+- @position = "new google.maps.LatLng(#{@location.lat}, #{@location.lng})"
+- @my_points = "place_no_geocode(#{@position}, '#{@stop.name}');"
 :javascript
   var map;
   var mc = null;
@@ -43,10 +21,9 @@
   var created ;
  
   function initialize() {
-    var latlng = new google.maps.LatLng(-23.7002104, 133.8806114);
     var myOptions = {
-      zoom: 3,
-      center: latlng,
+      zoom: 6 ,
+      center: #{@position},
       mapTypeId: google.maps.MapTypeId.TERRAIN
     };
 
@@ -55,7 +32,6 @@
     
     #{@my_points.to_s}
     created = setInterval(create_marker_cluster, 1000)
-    #{@my_routes_as_lines.to_s}
   } ;
 
   function create_marker_cluster()
@@ -67,6 +43,12 @@
     }
   };
 %body{:onload => "initialize()"}
-  =render :partial => '/header', :locals => {:text => "Trainlines - the world and train routes", :show_search => true}
-  #map_canvas
+  =render :partial => '/header', :locals => {:text => "#{@stop.name}"}
+  = form_tag(stop_path(@stop.id), :method => :put) do
+    = text_field_tag(:new_name, @stop.name)
+    %p{:style => "padding-top:0.3em; font-size: 1.0em; margin-left:10%; margin-right:10%; font-style: italic;"}
+      = "You can rename a stop and all related routes will be corrected"
+    .button
+      = submit_tag "Rename", :id => 'verify_save_route'
+  #map_canvas{:style=>"width:100%; height:80%"}
   =render :partial => '/footer'

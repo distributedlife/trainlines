@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110713120956) do
+ActiveRecord::Schema.define(:version => 20110714075613) do
 
   create_table "locations", :force => true do |t|
     t.decimal  "lat",        :null => false
@@ -31,7 +31,8 @@ ActiveRecord::Schema.define(:version => 20110713120956) do
 
   create_table "stops", :force => true do |t|
     t.integer "routes_id"
-    t.text    "name",      :null => false
+    t.text    "name",         :null => false
+    t.boolean "pass_through"
   end
 
   create_table "versions", :force => true do |t|

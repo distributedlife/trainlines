@@ -63,10 +63,15 @@ class TrainlinesController < ApplicationController
     stops.each do |stop|
       stop.strip!
 
-      geocoded_stops << get_location(stop)
+      next if stop.empty?
+
+      pass_through = !stop["*"].nil?
+      stop = stop.gsub("*", "")
+
+      geocoded_stops << get_location(stop, pass_through)
 
       if !changed and !@name.empty?
-        Stops.create(:name => stop, :routes_id => @route.id)
+        Stops.create(:name => stop, :routes_id => @route.id, :pass_through => pass_through)
       end
     end
     @geocoded_routes << geocoded_stops
@@ -100,10 +105,15 @@ class TrainlinesController < ApplicationController
     stops.each do |stop|
       stop.strip!
 
-      geocoded_stops << get_location(stop)
+      next if stop.empty?
+
+      pass_through = !stop["*"].nil?
+      stop = stop.gsub("*", "")
+
+      geocoded_stops << get_location(stop, pass_through)
 
       if !changed and !@name.empty?
-        Stops.create(:name => stop, :routes_id => route.id)
+        Stops.create(:name => stop, :routes_id => route.id, :pass_through => pass_through)
       end
     end
     @geocoded_routes << geocoded_stops
@@ -122,6 +132,14 @@ class TrainlinesController < ApplicationController
 
   def routes
     @routes = Routes.order("discontinued DESC").order(:name).all
+
+    sql = <<-SQL
+      select routes_id, count(*) as stops
+      from stops
+      group by routes_id
+    SQL
+
+    @route_stops = Stops.find_by_sql(sql)
   end
 
   def show
@@ -150,6 +168,26 @@ class TrainlinesController < ApplicationController
     redirect_to trainline_path(@route.id)
   end
 
+  def search
+    @q = params[:q]
+    @q.strip!
+    @q.downcase!
+
+    sql = <<-SQL
+      select *
+      from routes
+      join stops on routes.id = stops.routes_id
+      where (lower(routes.name) like '%#{@q}%' or lower(stops.name) like '%#{@q}%')
+      and routes.discontinued is null
+    SQL
+
+    @geocoded_routes = []
+    @used_stations = {}
+    Routes.find_by_sql(sql).each do |route|
+      @geocoded_routes << get_stops_from_route(route)
+    end
+  end
+
   private
   def get_collapsed_array_from_stop_string stops_string
     stops = []
@@ -164,13 +202,13 @@ class TrainlinesController < ApplicationController
   def get_stops_from_route route
     stops = []
     Stops.where(:routes_id => route.id).each do |stop|      
-      stops << get_location(stop.name)
+      stops << get_location(stop.name, stop.pass_through)
     end
 
     stops
   end
 
-  def get_location name
+  def get_location name, pass_through
     location = Location.where(:name => name)
     if location.empty?
       geo = GoogleGeocoder.geocode(name)
@@ -180,12 +218,12 @@ class TrainlinesController < ApplicationController
       @used_stations[name] = true
       sleep 0.1
 
-      return [geo.lat, geo.lng, true, name]
+      return [geo.lat, geo.lng, !pass_through, name]
     else
       if @used_stations[name].nil?
         @used_stations[name] = true
 
-        return [location.first.lat, location.first.lng, true, location.first.name]
+        return [location.first.lat, location.first.lng, !pass_through, location.first.name]
       else
         return [location.first.lat, location.first.lng, false, ""]
       end
