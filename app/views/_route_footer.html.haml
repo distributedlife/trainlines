@@ -8,9 +8,13 @@
   - else
     = link_to "discontinue", discontinue_trainline_path(id), :method => :put
   ]
+  all stops:
+  [
+  = link_to "browse", stops_path
+  ]
   all routes:
   [
   = link_to "add", new_trainline_path
   ,
-  = link_to "edit", routes_trainlines_path
+  = link_to "browse", routes_trainlines_path
   ]
