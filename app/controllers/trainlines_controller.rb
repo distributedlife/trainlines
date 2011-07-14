@@ -184,7 +184,6 @@ class TrainlinesController < ApplicationController
     @geocoded_routes = []
     @used_stations = {}
     Routes.find_by_sql(sql).each do |route|
-      ap route
       @geocoded_routes << get_stops_from_route(route)
     end
   end
