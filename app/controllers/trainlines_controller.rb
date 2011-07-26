@@ -1,6 +1,8 @@
 include Geokit::Geocoders
 
 class TrainlinesController < ApplicationController
+  caches_page :index, :show, :routes, :search
+
   def new
     @geocoded_routes = []
     @stops = ""
@@ -52,6 +54,10 @@ class TrainlinesController < ApplicationController
         stop.delete
       end
 
+      expire_page(:controller => 'trainlines', :action => 'index')
+      expire_page(:controller => 'trainlines', :action => 'search')
+      expire_page(:controller => 'trainlines', :action => 'routes')
+      expire_page(:controller => 'trainlines', :action => 'show', :id => params[:id])
       redirect_to trainline_path(@route.id)
     end
 
@@ -94,6 +100,10 @@ class TrainlinesController < ApplicationController
     if !changed and !@name.empty?
       route = Routes.create(:name => @name)
 
+      expire_page(:controller => 'trainlines', :action => 'index')
+      expire_page(:controller => 'trainlines', :action => 'search')
+      expire_page(:controller => 'trainlines', :action => 'routes')
+      expire_page(:controller => 'trainlines', :action => 'show', :id => params[:id])
       redirect_to root_path
     end
 
