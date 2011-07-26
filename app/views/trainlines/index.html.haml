@@ -1,14 +1,15 @@
 %script{:type => "text/javascript", :src => "http://maps.google.com/maps/api/js?sensor=true"}
 %script{:type => "text/javascript", :src => "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"}
 :javascript
-  function place_no_geocode(position, title)
+  function png(lat, lng, title)
   {
-    var marker = new google.maps.Marker({ position: position, title: title });
+    var marker = new google.maps.Marker({position: p(lat, lng), title: title});
     markers.push(marker);
     counter++;
   };
 
-  function draw_line(points, map) {
+  function dl(points, map)
+  {
     var line = new google.maps.Polyline({
       path: points,
       strokeColor: "#FF0000",
@@ -17,7 +18,12 @@
     });
 
     line.setMap(map);
-  }
+  };
+
+  function p(lat,lng)
+  {
+    return new google.maps.LatLng(lat, lng)
+  } ;
 
 - @marker_count = 0
 - @my_points = ""
@@ -25,15 +31,15 @@
 - @geocoded_routes.each do |route|
   - route_line = ""
   - route.each do |stop|
-    - position = "new google.maps.LatLng(#{stop[0]}, #{stop[1]})"
     - if stop[2] == true
-      - @my_points = "#{@my_points}\n place_no_geocode(#{position}, '#{stop[3]}');"
+      - @my_points = "#{@my_points} png(#{stop[0]},#{stop[1]},'#{stop[3]}');"
       - @marker_count = @marker_count + 1
+    - position = "p(#{stop[0]}, #{stop[1]})"
     - if route_line.empty?
       - route_line = "#{position}"
     - else
       - route_line = "#{route_line},#{position}"
-  - @my_routes_as_lines = "#{@my_routes_as_lines}\ndraw_line([#{route_line}],map);"
+  - @my_routes_as_lines = "#{@my_routes_as_lines}\dl([#{route_line}],map);"
 :javascript
   var map;
   var mc = null;
@@ -54,7 +60,9 @@
 
     
     #{@my_points.to_s}
+
     created = setInterval(create_marker_cluster, 1000)
+
     #{@my_routes_as_lines.to_s}
   } ;
 
