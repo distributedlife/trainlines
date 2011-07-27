@@ -131,7 +131,7 @@ class TrainlinesController < ApplicationController
   end
   
   def index
-#    response.headers['Cache-Control'] = 'public, max-age=300'
+    response.headers['Cache-Control'] = 'public, max-age=300'
 
     recent_route = Routes.order(:updated_at).first
     if stale?(:last_modified => recent_route.updated_at, :etag => recent_route.updated_at)
