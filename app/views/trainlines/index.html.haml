@@ -1,33 +1,7 @@
-%script{:type => "text/javascript", :src => "http://maps.google.com/maps/api/js?sensor=true"}
-%script{:type => "text/javascript", :src => "http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js"}
-:javascript
-  function png(lat, lng, title)
-  {
-    var marker = new google.maps.Marker({position: p(lat, lng), title: title});
-    markers.push(marker);
-    counter++;
-  };
-
-  function dl(points, map)
-  {
-    var line = new google.maps.Polyline({
-      path: points,
-      strokeColor: "#FF0000",
-      strokeOpacity: 1.0,
-      strokeWeight: 2
-    });
-
-    line.setMap(map);
-  };
-
-  function p(lat,lng)
-  {
-    return new google.maps.LatLng(lat, lng)
-  } ;
-
 - @marker_count = 0
 - @my_points = ""
 - @my_routes_as_lines = ""
+- my_first_position = nil
 - @geocoded_routes.each do |route|
   - route_line = ""
   - route.each do |stop|
@@ -35,29 +9,21 @@
       - @my_points = "#{@my_points} png(#{stop[0]},#{stop[1]},'#{stop[3]}');"
       - @marker_count = @marker_count + 1
     - position = "p(#{stop[0]}, #{stop[1]})"
+    - my_first_position = position if my_first_position.nil?
     - if route_line.empty?
       - route_line = "#{position}"
     - else
       - route_line = "#{route_line},#{position}"
-  - @my_routes_as_lines = "#{@my_routes_as_lines}\dl([#{route_line}],map);"
+  - @my_routes_as_lines = "#{@my_routes_as_lines} dl([#{route_line}],map);"
 :javascript
   var map;
-  var mc = null;
   var markers = [];
   var counter = 0 ;
   var done = #{@marker_count} ;
   var created ;
  
   function initialize() {
-    var latlng = new google.maps.LatLng(-23.7002104, 133.8806114);
-    var myOptions = {
-      zoom: 3,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.TERRAIN
-    };
-
-    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
+    map = new google.maps.Map(document.getElementById("map_canvas"), { zoom: 2, center: #{my_first_position}, mapTypeId: google.maps.MapTypeId.TERRAIN });
     
     #{@my_points.to_s}
 
@@ -65,15 +31,6 @@
 
     #{@my_routes_as_lines.to_s}
   } ;
-
-  function create_marker_cluster()
-  {
-    if (counter == done)
-    {
-      clearInterval ( created );
-      mc = new MarkerClusterer(map, markers);
-    }
-  };
 %body{:onload => "initialize()"}
   =render :partial => '/header', :locals => {:text => "Trainlines - the world and train routes", :show_search => true}
   #map_canvas
