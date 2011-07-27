@@ -5,7 +5,6 @@ gzip_assets: on
 javascripts:
   production:
     - public/javascripts/jquery.min.js
-    - public/javascripts/rails.js
     - public/javascripts/trainlines.js
     - public/javascripts/jquerydefaultvalue.js
 
