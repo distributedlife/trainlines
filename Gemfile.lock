@@ -76,6 +76,7 @@ GEM
     faker (0.9.5)
       i18n (~> 0.4)
     ffi (1.0.9)
+    geokit (1.6.0)
     gherkin (2.4.1)
       json (>= 1.4.6)
     haml (3.1.2)
@@ -180,6 +181,7 @@ DEPENDENCIES
   dalli
   database_cleaner
   faker
+  geokit
   gherkin
   haml
   heroku
