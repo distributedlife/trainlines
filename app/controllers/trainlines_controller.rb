@@ -131,15 +131,10 @@ class TrainlinesController < ApplicationController
   end
   
   def index
-    response.headers['Cache-Control'] = 'public, max-age=300'
-
-    recent_route = Routes.order(:updated_at).first
-    if stale?(:last_modified => recent_route.updated_at, :etag => recent_route.updated_at)
-      @geocoded_routes = []
-      @used_stations = {}
-      Routes.where(:discontinued => nil).each do |route|
-        @geocoded_routes << get_stops_from_route(route)
-      end
+    @geocoded_routes = []
+    @used_stations = {}
+    Routes.where(:discontinued => nil).each do |route|
+      @geocoded_routes << get_stops_from_route(route)
     end
   end
 
