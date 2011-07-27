@@ -102,8 +102,6 @@ class TrainlinesController < ApplicationController
 
       expire_page(:controller => 'trainlines', :action => 'index')
       expire_page(:controller => 'trainlines', :action => 'search')
-      expire_page(:controller => 'trainlines', :action => 'routes')
-      expire_page(:controller => 'trainlines', :action => 'show', :id => route.id)
       redirect_to root_path
     end
 
