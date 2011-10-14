@@ -32,6 +32,7 @@ class StopsController < ApplicationController
         stop_to_be_renamed.name = params[:new_name]
         stop_to_be_renamed.save
       end
+      
 
       redirect_to stops_path
     rescue
