@@ -19,3 +19,8 @@ namespace :staging do
     sh "heroku pgbackups:restore DATABASE `heroku pgbackups:url --app trainlines` --app trainlines-preprod"
   end
 end
+
+desc "Package assets for production"
+task :assets do
+  sh "bundle exec jammit --base-url http://trainlines.heroku.com"
+end
