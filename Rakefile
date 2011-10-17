@@ -16,7 +16,7 @@ end
 namespace :staging do
   desc "Copy latest prod backup to staging"
   task :copyfromprod do
-    sh "heroku pgbackups:restore DATABASE `heroku pgbackups:url --app trainlines` --app trainlines-preprod"
+    sh "heroku pgbackups:restore DATABASE `heroku pgbackups:url --app trainlines` --app trainlines-preprod --confirm trainlines-preprod"
   end
 end
 
